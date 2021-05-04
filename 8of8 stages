@@ -1,0 +1,45 @@
+# Write your code here
+import random
+
+print('H A N G M A N')
+
+
+def game_start():
+    words_list = ['python', 'java', 'kotlin', 'javascript']
+    word = list(random.choice(words_list))
+    guesses = list('-' * len(word))
+    not_in = []
+    lives = 8
+
+    while lives > 0 and '-' in guesses:
+        print('\n' + ''.join(guesses))
+        user_letter = input('Input a letter: ')
+        if len(user_letter) > 1 or user_letter == ' ':
+            print('You should input a single letter')
+        elif user_letter.isupper() or not user_letter.isalpha():
+            print('Please enter a lowercase English letter')
+        elif user_letter in guesses or user_letter in not_in:
+            print("You've already guessed this letter")
+        elif user_letter not in word:
+            print("That letter doesn't appear in the word")
+            not_in.append(user_letter)
+            lives -= 1
+        elif user_letter in word:
+            for i in range(len(word)):
+                if user_letter == word[i]:
+                    guesses[i] = user_letter
+
+    if lives > 0 and '-' not in guesses:
+        print('You guessed the word!\nYou survived!')
+    else:
+        print('You lost!')
+        
+def menu():
+    user_choice = input('Type "play" to play the game, "exit" to quit:')
+    
+    if user_choice == "play":
+        game_start()
+
+    else:    
+        menu()
+menu()
